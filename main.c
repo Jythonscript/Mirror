@@ -1,40 +1,40 @@
 #include <stdio.h>
 
-int printLineReversed();
+int printLineReversed(int printNewlines);
 
 int main() {
 
-	
-	while (printLineReversed()) {
-		//do nothing
-	}
-	putchar('\n');
+	printLineReversed(0); //print first line of stdin without the newline
+	while (printLineReversed(1)) //print lines until line ends in EOF
+		;//do nothing
+
+	putchar('\n');//make sure it ends in a newline
 
 	return 0;
 }
 
 
-//returns 1 if the line ends in a newline
-//returns 0 if the line ends in an EOF
-//returns -1 if neither of the above is true
-int printLineReversed() {
+//returns 0 if stdin line ends in EOF
+//returns 1 if not EOF
+//
+//if printNewlines is 1, it will print newlines, otherwise no
+int printLineReversed(int printNewlines) {
 
 	char c;
+	//get characters until end of line
 	if ((c = getchar()) != '\n') {
-
 		//check for end of stdin
 		if (c == EOF) {
 			return 0;
 		}
-
 		//reverse line if not end
-		printLineReversed();
+		printLineReversed(printNewlines);
 		putchar(c);
 	}
-	else {
-		//end of current line, but not end of stdin
+	//only print newlines if 
+	else if (printNewlines) {
 		putchar('\n');
-		return 1;
 	}
-	return -1;
+	//not newline, not EOF
+	return 1;
 }
